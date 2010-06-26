@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript">
+		function onCommand (event) {
+			switch(event.command) {
+				case 'closeDuplicateTabs':
+					closeDuplicateTabs(event.target);
+					break;
+			}
+		}
+		
+		function closeDuplicateTabs (toolbarItem) {
+			var tabList = toolbarItem.browserWindow.tabs, tabs, 
+				urlList = [];
+			for(var i = 0; i < tabList.length; i++) {
+				tab = tabList[i];
+				if(urlList.indexOf(tab.url) > -1) tab.close();
+				else urlList.push(tab.url);
+			}
+		}
+		
+		safari.application.addEventListener('command', onCommand, false);
+	</script>
+</head>
+<body>
+	<div id="container">
+		
+	</div>
+</body>
+</html>
