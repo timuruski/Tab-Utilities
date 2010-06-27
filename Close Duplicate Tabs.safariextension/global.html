@@ -69,12 +69,17 @@
 			}
 			
 			// Optionally group orphan tabs into one window.
-			// 
+			if(safari.extension.settings.groupOrphans) {
+				// console.log('Grouping orphans.');
+			}
 		}
 		
 		function getDomain (url) {
 			var schemeSeparator = '://', 
 				schemePos = url.indexOf(schemeSeparator);
+			if(safari.extension.settings.groupSubdomains) {
+				// 
+			}
 			return (schemePos === -1) ? 
 				url : 
 				url.substring( schemePos + schemeSeparator.length, url.indexOf('/', schemePos + schemeSeparator.length ) );
