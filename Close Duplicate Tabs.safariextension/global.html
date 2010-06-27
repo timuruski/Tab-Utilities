@@ -8,40 +8,76 @@
 					closeDuplicateTabs(event.target);
 					break;
 				case 'consolidateTabs':
-					consolidateTabs(event.target);
+					// consolidateTabs( [event.target.browserWindow] );
+					consolidateTabs();
 					break;
 			}
 		}
 		
 		function closeDuplicateTabs (toolbarItem) {
 			// Exactly what it says on the tin.
-			var tabList = toolbarItem.browserWindow.tabs, tab, 
+			var tab, 
+				tabList = toolbarItem.browserWindow.tabs, 
 				urlList = [];
-			for(var i = 0; i < tabList.length; i++) {
-				tab = tabList[i];
+			for(var tabPt = 0; i < tabPt.length; tabPt++) {
+				tab = tabList[tabPt];
 				if(urlList.indexOf(tab.url) > -1) tab.close();
 				else urlList.push(tab.url);
 			}
 		}
 		
-		function consolidateTabs (toolbarItem) {
+		function consolidateTabs (windowList) {
+			if(windowList === undefined) windowList = safari.application.browserWindows;
 			// Group tabs with the same host into a new window.
-			var tabList = toolbarItem.browserWindow.tabs, tab, domain, targetWindow, 
-				domainList = [];
-			for(var i = 0; i < tabList.length; i++) {
-				tab = tabList[i];
-				domain = tab.url.substring( tab.url.indexOf('://') + 3, tab.url.indexOf('/', tab.url.indexOf('://') + 3 ) );
-				if(!domainList.hasOwnProperty(domain)) { domainList[domain] = []; }
-				domainList[domain].push(tab);
-			}
-			for(var k in domainList) {
-				domain = domainList[k];
-				if(domain.length > 1) {
-					targetWindow = safari.application.openBrowserWindow();
-					for(var i = 0; i < domain.length; i++) { targetWindow.insertTab(domain[i], i); }
-					// TODO Seems to leave an empty tab; close it.
+			var srcWindow, destWindow, windowTable = {}, 
+				tab, lastTab, tabList, 
+				domain, domainList = [];
+			
+			// Sort tabs by domain.
+			for( var windowPt = 0; windowPt < windowList.length; windowPt++) {
+				srcWindow = windowList[windowPt];
+				tabList = srcWindow.tabs;
+				for(var tabPt = 0; tabPt < tabList.length; tabPt++) {
+					tab = tabList[tabPt];
+					if(tab.url !== undefined && tab.url !== '') {
+						console.log('Considering: ' + tab.url.substr(0, 100));
+						domain = getDomain(tab.url);
+						if(!domainList.hasOwnProperty(domain)) { domainList[domain] = []; }
+						domainList[domain].push(tab);
+					}
 				}
 			}
+			
+			// Consolidate tabs into domain-specific windows.
+			for(var domainKey in domainList) {
+				domain = domainList[domainKey];
+				if(domain.length > 1) {
+					if(windowTable.hasOwnProperty(domainKey)) {
+						destWindow = windowTable[domainKey];
+					} else {
+						windowTable[domainKey] = destWindow = safari.application.openBrowserWindow();
+					}
+					
+					for(var i = 0; i < domain.length; i++) {
+						console.log('Moving: ' + domain[i].url.substr(0, 100));
+						destWindow.insertTab(domain[i], i);
+					}
+					// Close resulting empty tab.
+					lastTab = destWindow.tabs[destWindow.tabs.length - 1];
+					if(lastTab.url === undefined || lastTab.url === '') { lastTab.close(); }
+				}
+			}
+			
+			// Optionally group orphan tabs into one window.
+			// 
+		}
+		
+		function getDomain (url) {
+			var schemeSeparator = '://', 
+				schemePos = url.indexOf(schemeSeparator);
+			return (schemePos === -1) ? 
+				url : 
+				url.substring( schemePos + schemeSeparator.length, url.indexOf('/', schemePos + schemeSeparator.length ) );
 		}
 		
 		safari.application.addEventListener('command', onCommand, false);
