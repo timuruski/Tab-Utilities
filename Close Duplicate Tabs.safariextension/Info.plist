@@ -32,7 +32,19 @@
 				<key>Palette Label</key>
 				<string></string>
 				<key>Tool Tip</key>
-				<string></string>
+				<string>Closes tabs that have the same URL.</string>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<string>consolidateTabs</string>
+				<key>Identifier</key>
+				<string>ConsolidateTabs</string>
+				<key>Image</key>
+				<string>consolidate-icon.png</string>
+				<key>Label</key>
+				<string>Consolidate Tabs</string>
+				<key>Tool Tip</key>
+				<string>Group tabs with the same domain into a new window.</string>
 			</dict>
 		</array>
 	</dict>
@@ -49,6 +61,8 @@
 	<dict>
 		<key>Website Access</key>
 		<dict>
+			<key>Include Secure Pages</key>
+			<true/>
 			<key>Level</key>
 			<string>All</string>
 		</dict>

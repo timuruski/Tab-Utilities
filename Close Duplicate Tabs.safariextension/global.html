@@ -7,16 +7,40 @@
 				case 'closeDuplicateTabs':
 					closeDuplicateTabs(event.target);
 					break;
+				case 'consolidateTabs':
+					consolidateTabs(event.target);
+					break;
 			}
 		}
 		
 		function closeDuplicateTabs (toolbarItem) {
-			var tabList = toolbarItem.browserWindow.tabs, tabs, 
+			// Exactly what it says on the tin.
+			var tabList = toolbarItem.browserWindow.tabs, tab, 
 				urlList = [];
 			for(var i = 0; i < tabList.length; i++) {
 				tab = tabList[i];
 				if(urlList.indexOf(tab.url) > -1) tab.close();
 				else urlList.push(tab.url);
+			}
+		}
+		
+		function consolidateTabs (toolbarItem) {
+			// Group tabs with the same host into a new window.
+			var tabList = toolbarItem.browserWindow.tabs, tab, domain, targetWindow, 
+				domainList = [];
+			for(var i = 0; i < tabList.length; i++) {
+				tab = tabList[i];
+				domain = tab.url.substring( tab.url.indexOf('://') + 3, tab.url.indexOf('/', tab.url.indexOf('://') + 3 ) );
+				if(!domainList.hasOwnProperty(domain)) { domainList[domain] = []; }
+				domainList[domain].push(tab);
+			}
+			for(var k in domainList) {
+				domain = domainList[k];
+				if(domain.length > 1) {
+					targetWindow = safari.application.openBrowserWindow();
+					for(var i = 0; i < domain.length; i++) { targetWindow.insertTab(domain[i], i); }
+					// TODO Seems to leave an empty tab; close it.
+				}
 			}
 		}
 		
