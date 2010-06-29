@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Flirt Software</string>
 	<key>CFBundleDisplayName</key>
-	<string>Tabs Utilities</string>
+	<string>Tab Utilities</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.flirtsw.safari.tab-utils</string>
 	<key>CFBundleInfoDictionaryVersion</key>
