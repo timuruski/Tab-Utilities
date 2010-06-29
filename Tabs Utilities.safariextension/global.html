@@ -14,6 +14,29 @@
 			}
 		}
 		
+		function onValidate (event) {
+			validateToolbarItem(event.command);
+		}
+		
+		function validateToolbarItem (name) {
+			var w, t, disabled = true, 
+				windowList = safari.application.browserWindows;
+			for(var windowPt = 0; windowPt < windowList.length; windowPt++) {
+				w = windowList[windowPt];
+				for(var tabPt = 0; tabPt < w.tabs.length; tabPt++) {
+					t = w.tabs[tabPt];
+					if(t.url !== undefined && t.url !== '') {
+						disabled = false;
+						break;
+					}
+				}
+			}
+			for(var i = 0; i < safari.extension.toolbarItems.length; i++) {
+				var toolbarItem = safari.extension.toolbarItems[i];
+				if(toolbarItem.command === name) toolbarItem.disabled = disabled;
+			}
+		}
+		
 		function closeDuplicateTabs (windowList) {
 			// Exactly what it says on the tin.
 			if(windowList === undefined) windowList = safari.application.browserWindows;
@@ -112,6 +135,7 @@
 		}
 		
 		safari.application.addEventListener('command', onCommand, false);
+		safari.application.addEventListener('validate', onValidate, false);
 	</script>
 </head>
 <body>

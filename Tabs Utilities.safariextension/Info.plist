@@ -32,7 +32,7 @@
 				<key>Palette Label</key>
 				<string></string>
 				<key>Tool Tip</key>
-				<string>Closes tabs that have the same URL.</string>
+				<string>Closes tabs that have the same URL</string>
 			</dict>
 			<dict>
 				<key>Command</key>
@@ -44,7 +44,7 @@
 				<key>Label</key>
 				<string>Consolidate Tabs</string>
 				<key>Tool Tip</key>
-				<string>Group tabs with the same domain into a new window.</string>
+				<string>Group tabs with the same domain into a new window</string>
 			</dict>
 		</array>
 	</dict>
