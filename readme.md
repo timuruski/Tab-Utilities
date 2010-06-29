@@ -1,6 +1,6 @@
 # Tab Utilities #
 
-A Safari 5 extension for miscellaneous tab functions, close duplicates, consolidate by host, etc.
+A Safari 5 extension with buttons to close duplicate tabs and group tabs by hostname.
 
 ## Version History ##
 
