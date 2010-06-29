@@ -5,7 +5,7 @@
 		function onCommand (event) {
 			switch(event.command) {
 				case 'closeDuplicateTabs':
-					closeDuplicateTabs(event.target);
+					closeDuplicateTabs();
 					break;
 				case 'consolidateTabs':
 					// consolidateTabs( [event.target.browserWindow] );
@@ -14,15 +14,18 @@
 			}
 		}
 		
-		function closeDuplicateTabs (toolbarItem) {
+		function closeDuplicateTabs (windowList) {
 			// Exactly what it says on the tin.
-			var tab, 
-				tabList = toolbarItem.browserWindow.tabs, 
+			if(windowList === undefined) windowList = safari.application.browserWindows;
+			var tabList, tab, 
 				urlList = [];
-			for(var tabPt = 0; i < tabPt.length; tabPt++) {
-				tab = tabList[tabPt];
-				if(urlList.indexOf(tab.url) > -1) tab.close();
-				else urlList.push(tab.url);
+			for( var windowPt = 0; windowPt < windowList.length; windowPt++) {
+				tabList = windowList[windowPt].tabs;
+				for(var tabPt = 0; tabPt < tabList.length; tabPt++) {
+					tab = tabList[tabPt];
+					if(urlList.indexOf(tab.url) > -1) tab.close();
+					else urlList.push(tab.url);
+				}
 			}
 		}
 		
@@ -71,6 +74,18 @@
 			// Optionally group orphan tabs into one window.
 			if(safari.extension.settings.groupOrphans) {
 				// console.log('Grouping orphans.');
+				destWindow = null;
+				windowList = safari.application.browserWindows;
+				for(var windowPt = 0; windowPt < windowList.length; windowPt++) {
+					srcWindow = windowList[windowPt];
+					if(srcWindow.tabs.length === 1) {
+						if(destWindow === null) {
+							destWindow = srcWindow;
+						} else {
+							destWindow.insertTab(srcWindow.tabs[0], destWindow.tabs.length - 1);
+						}
+					}
+				}
 			}
 		}
 		
@@ -81,6 +96,7 @@
 			  ipv4Pattern = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/, 
 			  domainPattern = /^(a-z0-9]+(-[a-z0-9]+)*\.)*[a-z]{2,}$/i, 
 			  tldPattern = /([^.]+\.)?[a-z]{2,}$/i;
+		
 		function getDomain (url) {
 			var host = hostPattern.exec(url)[1];
 			console.log(host);
