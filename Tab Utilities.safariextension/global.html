@@ -7,9 +7,9 @@
 				case 'closeDuplicateTabs':
 					closeDuplicateTabs();
 					break;
-				case 'consolidateTabs':
-					// consolidateTabs( [event.target.browserWindow] );
-					consolidateTabs();
+				case 'groupTabs':
+					// groupTabs( [event.target.browserWindow] );
+					groupTabs();
 					break;
 			}
 		}
@@ -52,7 +52,7 @@
 			}
 		}
 		
-		function consolidateTabs (windowList) {
+		function groupTabs (windowList) {
 			if(windowList === undefined) windowList = safari.application.browserWindows;
 			// Group tabs with the same host into a new window.
 			var srcWindow, destWindow, windowTable = {}, 
@@ -74,7 +74,7 @@
 				}
 			}
 			
-			// Consolidate tabs into domain-specific windows.
+			// Group tabs into domain-specific windows.
 			for(var domainKey in domainList) {
 				domain = domainList[domainKey];
 				if(domain.length > 1) {

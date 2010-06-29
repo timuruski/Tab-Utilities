@@ -8,7 +8,7 @@
 		<key>Key</key>
 		<string>groupOrphans</string>
 		<key>Title</key>
-		<string>Consolidate Tabs</string>
+		<string>Group Tabs</string>
 		<key>Type</key>
 		<string>Group</string>
 	</dict>

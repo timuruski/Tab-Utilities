@@ -36,13 +36,13 @@
 			</dict>
 			<dict>
 				<key>Command</key>
-				<string>consolidateTabs</string>
+				<string>groupTabs</string>
 				<key>Identifier</key>
-				<string>ConsolidateTabs</string>
+				<string>GroupTabs</string>
 				<key>Image</key>
-				<string>consolidate-tabs-icon.png</string>
+				<string>group-tabs-icon.png</string>
 				<key>Label</key>
-				<string>Consolidate Tabs</string>
+				<string>Group Tabs</string>
 				<key>Tool Tip</key>
 				<string>Group tabs with the same domain into a new window</string>
 			</dict>
@@ -54,7 +54,7 @@
 		<dict/>
 	</dict>
 	<key>Description</key>
-	<string>Buttons to close duplicate tabs and consolidate tabs by domain name.</string>
+	<string>Toolbar buttons to close duplicate tabs and group tabs by hostname.</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
