@@ -26,7 +26,7 @@
 				<key>Identifier</key>
 				<string>CloseDuplicateTabs</string>
 				<key>Image</key>
-				<string>toolbar-icon.png</string>
+				<string>close-duplicate-tabs-icon.png</string>
 				<key>Label</key>
 				<string>Close Duplicate Tabs</string>
 				<key>Palette Label</key>
@@ -40,7 +40,7 @@
 				<key>Identifier</key>
 				<string>ConsolidateTabs</string>
 				<key>Image</key>
-				<string>consolidate-icon.png</string>
+				<string>consolidate-tabs-icon.png</string>
 				<key>Label</key>
 				<string>Consolidate Tabs</string>
 				<key>Tool Tip</key>
@@ -54,7 +54,7 @@
 		<dict/>
 	</dict>
 	<key>Description</key>
-	<string>Closes duplicate tabs in the active window.</string>
+	<string>Buttons to close duplicate tabs and consolidate tabs by domain name.</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
