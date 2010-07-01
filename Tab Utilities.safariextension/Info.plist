@@ -40,7 +40,7 @@
 				<key>Identifier</key>
 				<string>GroupTabs</string>
 				<key>Image</key>
-				<string>group-tabs-icon.png</string>
+				<string>consolidate-tabs-icon.png</string>
 				<key>Label</key>
 				<string>Group Tabs</string>
 				<key>Tool Tip</key>
