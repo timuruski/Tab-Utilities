@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Organize Tabs</title>
+	<!-- <script type="text/javascript">
+		safari.self.addEventListener('message', onReceiveMessage, false);
+		safari.self.tab.dispatchMessage('getWindowsAndTabs');
+		var windowList, currentTab;
+		function onReceiveMessage (event) {
+			// console.log(event);
+			var tabList, tabObj, windowObj, img;
+			windowList = event.message.windowList;
+			currentTab = event.message.currentTab;
+			for(var i in windowList) {
+				windowObj = windowList[i];
+				tabList = windowList[i];
+				for(var j in tabList) {
+					tabObj = tabList[j];
+					img = new Image();
+					img.src = tabObj.content;
+					img.className = 'tabThumbnail'
+					document.body.appendChild(img);
+				}
+			}
+		}
+	</script> -->
+	<style type="text/css">
+		body { margin: 0; padding: 0; background: #22252F -webkit-gradient(linear, left top, left bottom, from(#000000), to(#22252F) ) repeat-x; }
+		/*body { margin: 0; padding: 0; background: white; }*/
+		#upperToolbar { margin: 20px 0; }
+		#windowView { margin: 100px 0 0; }
+		
+		.button {
+			cursor: default;
+			font: bold 10px Helvetica, sans-serif;
+			color: rgba(255, 255, 255, 0.60);
+			width: auto; height: 20px;
+			margin; 0; padding: 4px 10px;
+			/*background: rgba(0, 0, 0, 0.80);*/
+			background: -webkit-gradient(linear, left top, left bottom, from( rgba(51, 51, 51, 0.90) ), color-stop( 35%, rgba(51, 51, 51, 0.90) ), to( rgba(0, 0, 0, 0.60) ) );
+			border: 1px solid rgba(255, 255, 255, 0.50);
+			-webkit-border-radius: 6px;
+		}
+		.button:hover {
+			color: rgba(255, 255, 255, 0.90);
+			background: -webkit-gradient(linear, left top, left bottom, from( rgba(153, 153, 153, 0.60) ), color-stop( 35%, rgba(153, 153, 153, 0.60) ), to( rgba(0, 0, 0, 0.60) ) );
+			border-color: rgba(255, 255, 255, 0.70);
+		}
+		
+		.tabThumbnail {
+			width: 20%; height: 20%;
+			margin: 10px; padding: 0;
+		}
+		.selected {
+			-webkit-box-shadow: 0 0 20px #2E65C4;
+		}
+	</style>
+</head>
+<body>
+	<div id="upperToolbar">
+		<span id="cancelButton" class="button">Cancel</span>
+		<span id="autoGroupButton" class="button">Group By Domain</span>
+		<span id="doneButton" class="button">Done</span>
+	</div>
+	<div id="windowView">
+		<img class="tabThumbnail selected" src="images/thumbs/apple.com.png" width="1048" height="662" alt="Apple.Com">
+		<img class="tabThumbnail" src="images/thumbs/daringfireball.net.png" width="1048" height="662" alt="Daringfireball.Net">
+		<img class="tabThumbnail" src="images/thumbs/dribbble.com.png" width="1048" height="662" alt="Dribbble.Com">
+	</div>
+</body>
+</html>
