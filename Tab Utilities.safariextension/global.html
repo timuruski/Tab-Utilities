@@ -11,11 +11,20 @@
 					// groupTabs( [event.target.browserWindow] );
 					groupTabs();
 					break;
+				case 'organizeTabs':
+					showOrganizeTabs(event);
+					break;
 			}
 		}
-		
 		function onValidate (event) {
 			validateToolbarItem(event.command);
+		}
+		function onOrganizeTabsMessage (event) {
+			switch(event.name) {
+				case 'getWindowsAndTabs':
+					getWindowsAndTabs(event);
+					break;
+			}
 		}
 		
 		function validateToolbarItem (name) {
@@ -112,7 +121,6 @@
 			}
 		}
 		
-		
 		// var domainPattern = /^[a-z][a-z0-9+\-.]*:\/\/([a-z0-9\-._~%]+|\[[a-z0-9\-_.~%!$&'()*+,;=:]+\])/; // Matches IPv6, sorta.
 		// var hostPattern = /^[a-z][a-z0-9+\-.]*:\/\/([a-z0-9\-._~%]+)/i, 
 		const hostPattern = /^[a-z][a-z0-9+\-.]*:\/\/([a-z0-9\-._~%]+)/i, 
@@ -133,6 +141,39 @@
 			else return host;
 			
 		}
+		
+		
+		var currentTab, organizeTabsView;
+		function showOrganizeTabs (event) {
+			// Grab screen of the existing tab.
+			// Only show if more than one window?
+			// Onl show if no existing organize tab screen is open?
+			currentTab = { url: safari.application.activeBrowserWindow.activeTab.url, screen: safari.application.activeBrowserWindow.activeTab.visibleContentsAsDataURL() }
+			console.log(event);
+			safari.application.activeBrowserWindow.activeTab.addEventListener('message', onOrganizeTabsMessage, false);
+			safari.application.activeBrowserWindow.activeTab.url = safari.extension.baseURI + 'organizeTabs.html';
+			// safari.application.browserWindows.tabs.each { visibleContentsAsDataURL }
+			// organizeTabsView = safari.application.activeBrowserWindow.activeTab;
+			// event.target.browserWindow.activeTab;
+		}
+		function getWindowsAndTabs (event) {
+			// Get screenshots of all tabs
+			// Group into windows and send to organizeTabs window.
+			console.log(event);
+			var windowList = [], windowObj, tabList, tabObj;
+			var data = { windowList: windowList, currentTab: currentTab };
+			for(var k1 in safari.application.browserWindows) {
+				windowObj = safari.application.browserWindows[k1];
+				windowList.push( tabList = [] );
+				for(var k2 in windowObj.tabs) {
+					tabObj = windowObj.tabs[k2];
+					tabList.push( { url: tabObj.url, title: tabObj.title, content: tabObj.visibleContentsAsDataURL() } );
+				}
+			}
+			
+			event.target.page.dispatchMessage('getWindowsAndTabs', data );
+		}
+		
 		
 		safari.application.addEventListener('command', onCommand, false);
 		safari.application.addEventListener('validate', onValidate, false);

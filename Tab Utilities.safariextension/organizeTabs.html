@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Organize Tabs</title>
+	<script type="text/javascript">
+		safari.self.addEventListener('message', onReceiveMessage, false);
+		safari.self.tab.dispatchMessage('getWindowsAndTabs');
+		var windowList, currentTab;
+		function onReceiveMessage (event) {
+			// console.log(event);
+			var tabList, tabObj, windowObj, img;
+			windowList = event.message.windowList;
+			currentTab = event.message.currentTab;
+			for(var i in windowList) {
+				windowObj = windowList[i];
+				tabList = windowList[i];
+				for(var j in tabList) {
+					tabObj = tabList[j];
+					img = new Image();
+					img.src = tabObj.content;
+					img.className = 'tabThumbnail'
+					document.body.appendChild(img);
+				}
+			}
+		}
+	</script>
+	<style type="text/css">
+		img.tabThumbnail {
+			width: 20%; height: 20%;
+			margin: 10px; padding: 0;
+			-webkit-box-shadow: 0 0 10px #2E65C4;
+		}
+	</style>
+</head>
+<body>
+	<div id="upperToolbar"></div>
+</body>
+</html>
